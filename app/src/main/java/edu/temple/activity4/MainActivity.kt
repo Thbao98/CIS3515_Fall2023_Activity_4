@@ -1,5 +1,6 @@
 package edu.temple.activity4
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,12 +29,23 @@ class MainActivity : AppCompatActivity() {
         for (i in 0 until textSizes.size)
             Log.d("Array values", textSizes[i].toString() )
 
-        textSizeSelector.adapter = TextSizeAdapter(textSizes){
-            textSizeDisplay.textSize = it
+//        textSizeSelector.adapter = TextSizeAdapter(textSizes){
+//            textSizeDisplay.textSize = it
+//        }
+//        textSizeSelector.layoutManager = LinearLayoutManager(this)
+        with (findViewById(R.id.textSizeSelectorRecyclerView) as RecyclerView){
+            adapter = TextSizeAdapter(textSizes) {
+                //textSizeDisplay.textSize = it
+                val intent = Intent(this@MainActivity, MainActivity2::class.java)
+
+                intent.getFloatExtra("key", it)
+                startActivity (intent)
+            }
+            layoutManager = LinearLayoutManager(this@MainActivity)
         }
-        textSizeSelector.layoutManager = LinearLayoutManager(this)
 
     }
+
 }
 
 
